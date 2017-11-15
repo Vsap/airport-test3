@@ -18,3 +18,14 @@ object CompanyTable{
   val table = TableQuery[CompanyTable]
 }
 
+class CompanyRepository(db: Database){
+  val companyTableQuery = TableQuery[CompanyTable]
+  def create(company: Company): Future[Company] =
+    db.run(companyTableQuery returning companyTableQuery += company)
+  def update(company: Company):Future[Int] =
+    db.run(companyTableQuery.filter( _.id === company.id).update(company))
+  def delete(company: Company):Future[Int] =
+    db.run(companyTableQuery.filter( _.id === company.id).delete)
+  def getById(companyId: Long):Future[Option[Company]] =
+    db.run(companyTableQuery.filter(_.id === companyId).result.headOption)
+}
