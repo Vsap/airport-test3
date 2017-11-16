@@ -38,9 +38,8 @@ object Main {
     }
 
     for (i <- 1 to 50) {
-      Await.result(tripRepository.create(Trip(Some(i), i % 5 + 1, s"Plane #$i",
-        s"Town From #$i", s"Town To #$i",
-          LocalDateTime.ofEpochSecond(i*110,0, ZoneOffset.UTC), LocalDateTime.ofEpochSecond(i*110,0,ZoneOffset.UTC))), Duration.Inf)
+      Await.result(tripRepository.create(Trip(Some(i), i, i % 5 + 1, s"Plane #$i",
+        s"Town From #$i", s"Town To #$i", LocalDateTime.ofEpochSecond(i*110,0, ZoneOffset.UTC), LocalDateTime.ofEpochSecond(i*110,0,ZoneOffset.UTC))), Duration.Inf)
     }
 
     for (i <- 1 to 30) {

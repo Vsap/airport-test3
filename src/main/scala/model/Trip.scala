@@ -8,6 +8,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import java.time.LocalDateTime
 
 case class Trip(id:Option[Long],
+                tripNo: Long,
                 companyId: Long,
                 plane: String,
                 townFrom: String,
@@ -17,12 +18,13 @@ case class Trip(id:Option[Long],
 
 class TripTable(tag: Tag) extends Table[Trip](tag, "trip"){
   val id = column[Long]("id", O.PrimaryKey, O.AutoInc)
-  val companyId = column[Long]("companyId")
+  val tripNo = column[Long]("trip_no")
+  val companyId = column[Long]("company_id")
   val plane = column[String]("plane")
   val townFrom = column[String]("from")
   val townTo = column[String]("to")
-  val timeOut = column[LocalDateTime]("timeOut")
-  val timeIn = column[LocalDateTime]("timeIn")
+  val timeOut = column[LocalDateTime]("time_out")
+  val timeIn = column[LocalDateTime]("time_in")
 
 
   val companyFk = foreignKey("company_id_fk", companyId, TableQuery[CompanyTable])(_.id)
