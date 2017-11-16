@@ -7,7 +7,13 @@ import scala.concurrent.duration.Duration
 import scala.concurrent.ExecutionContext.Implicits.global
 import java.time.LocalDateTime
 
-case class Trip(id:Option[Long], companyId: Long, plane: String, townFrom: String, townTo: String, timeOut: Int, timeIn: Int)
+case class Trip(id:Option[Long],
+                companyId: Long,
+                plane: String,
+                townFrom: String,
+                townTo: String,
+                timeOut: LocalDateTime,
+                timeIn: LocalDateTime)
 
 class TripTable(tag: Tag) extends Table[Trip](tag, "trip"){
   val id = column[Long]("id", O.PrimaryKey, O.AutoInc)
@@ -15,8 +21,8 @@ class TripTable(tag: Tag) extends Table[Trip](tag, "trip"){
   val plane = column[String]("plane")
   val townFrom = column[String]("from")
   val townTo = column[String]("to")
-  val timeOut = column[Int]("timeOut")
-  val timeIn = column[Int]("timeIn")
+  val timeOut = column[LocalDateTime]("timeOut")
+  val timeIn = column[LocalDateTime]("timeIn")
 
 
   val companyFk = foreignKey("company_id_fk", companyId, TableQuery[CompanyTable])(_.id)
