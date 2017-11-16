@@ -13,9 +13,7 @@ case class Trip(id:Option[Long],
                 plane: String,
                 townFrom: String,
                 townTo: String,
-                //timeOut: LocalDateTime,
                 timeOut: String,
-                //timeIn: LocalDateTime)
                 timeIn: String)
 
 class TripTable(tag: Tag) extends Table[Trip](tag, "trip"){
@@ -25,15 +23,13 @@ class TripTable(tag: Tag) extends Table[Trip](tag, "trip"){
   val plane = column[String]("plane")
   val townFrom = column[String]("from")
   val townTo = column[String]("to")
-  //val timeOut = column[LocalDateTime]("time_out")
   val timeOut = column[String]("time_out")
-  //val timeIn = column[LocalDateTime]("time_in")
   val timeIn = column[String]("time_in")
 
 
   val companyFk = foreignKey("company_id_fk", companyId, TableQuery[CompanyTable])(_.id)
 
-  def * = (id.?, companyId, plane, townFrom, townTo, timeOut, timeIn) <>
+  def * = (id.?,tripNo, companyId, plane, townFrom, townTo, timeOut, timeIn) <>
     (Trip.apply _ tupled, Trip.unapply)
 }
 
