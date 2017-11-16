@@ -23,20 +23,23 @@ case class DataConverter(path: String) {
     } yield Passenger(Option(id.toLong), name)
   }
   def getTrip(file: List[String]):List[Trip] = {
-    val tripPattern = """\((.*),(.*),(".*"),(".*"),(".*"),"((.){4}(.){2}(.){2} (.*):(.*):(.*))","((.){4}(.){2}(.){2} (.*):(.*):(.*))"\)""".r
-    for{
-      line <- file
-      tripPattern(tripNo, companyId, plane, townFrom, townTo, (yO, mO, dO, hO, minsO, sO), (yI, mI, dI, hI, minsI, sI)) <- tripPattern.findAllIn(line)
-    } yield Trip(Option(tripNo.toLong), tripNo.toLong, companyId.toLong, plane,
-      townFrom, townTo, LocalDateTime.of(yO, mO, dO, hO, minsO, sO, 0), LocalDateTime.of(yI, mI, dI, hI, minsI, sI, 0))
-  }
-  LocalDateTime.
-  def getPassInTrip(file: List[String]):List[(String, String, String, String)] = {
+    //val tripPattern = """\((.*),(.*),(".*"),(".*"),(".*"),"((.){4}(.){2}(.){2} (.*):(.*):(.*))","((.){4}(.){2}(.){2} (.*):(.*):(.*))"\)""".r
     val tripPattern = """\((.*),(.*),(".*"),(".*"),(".*"),"(.*)","(.*)"\)""".r
     for{
       line <- file
-      tripPattern(tripId, dateTo, passengerId, place) <- tripPattern.findAllIn(line)
-    } yield (tripId, dateTo, passengerId, place)
+      if(line != """(-*)(Pass_in_trip)(-*)""")
+      //tripPattern(tripNo, companyId, plane, townFrom, townTo, (yO, mO, dO, hO, minsO, sO), (yI, mI, dI, hI, minsI, sI)) <- tripPattern.findAllIn(line)
+        tripPattern(tripNo, companyId, plane, townFrom, townTo, timeOut, timeIn) <- tripPattern.findAllIn(line)
+    } yield Trip(Option(tripNo.toLong), tripNo.toLong, companyId.toLong, plane,
+      //townFrom, townTo, LocalDateTime.of(yO, mO, dO, hO, minsO, sO, 0), LocalDateTime.of(yI, mI, dI, hI, minsI, sI, 0))
+        townFrom, townTo, timeOut, timeIn)
+  }
+  def getPassInTrip(file: List[String]):List[PassInTrip] = {
+    val passInTripPattern = """\((.*),(".*"),(.*),"(.*)"\)""".r
+    for{
+      line <- file
+      passInTripPattern(tripId, dateTo, passengerId, place) <- passInTripPattern.findAllIn(line)
+    } yield PassInTrip(Option(tripId.toLong), tripId.toLong, dateTo, passengerId.toLong, place)
   }
 
 }
