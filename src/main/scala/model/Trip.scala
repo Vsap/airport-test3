@@ -7,7 +7,7 @@ import scala.concurrent.duration.Duration
 import scala.concurrent.ExecutionContext.Implicits.global
 import java.time.LocalDateTime
 
-case class Trip(id:Option[Long],
+case class Trip(
                 tripNo: Long,
                 companyId: Long,
                 plane: String,
@@ -17,7 +17,7 @@ case class Trip(id:Option[Long],
                 timeIn: String)
 
 class TripTable(tag: Tag) extends Table[Trip](tag, "trip"){
-  val id = column[Long]("id", O.PrimaryKey, O.AutoInc)
+
   val tripNo = column[Long]("trip_no")
   val companyId = column[Long]("company_id")
   val plane = column[String]("plane")
@@ -29,7 +29,7 @@ class TripTable(tag: Tag) extends Table[Trip](tag, "trip"){
 
   val companyFk = foreignKey("company_id_fk", companyId, TableQuery[CompanyTable])(_.id)
 
-  def * = (id.?,tripNo, companyId, plane, townFrom, townTo, timeOut, timeIn) <>
+  def * = (tripNo, companyId, plane, townFrom, townTo, timeOut, timeIn) <>
     (Trip.apply _ tupled, Trip.unapply)
 }
 
@@ -39,9 +39,9 @@ class TripRepository(db: Database){
   def create(trip: Trip):Future[Trip] =
     db.run(TripTable.table returning TripTable.table += trip)
   def update(trip: Trip): Future[Int] =
-    db.run(TripTable.table.filter(_.id === trip.id).update(trip))
+    db.run(TripTable.table.filter(_.tripNo === trip.tripNo).update(trip))
   def delete(trip: Trip): Future[Int] =
-    db.run(TripTable.table.filter(_.id === trip.id).delete)
-  def getById(tripId: Long): Future[Option[Trip]] =
-    db.run(TripTable.table.filter(_.id === tripId).result.headOption)
+    db.run(TripTable.table.filter(_.tripNo === trip.tripNo).delete)
+  def getByNo(tripId: Long): Future[Option[Trip]] =
+    db.run(TripTable.table.filter(_.tripNo === tripId).result.headOption)
 }
