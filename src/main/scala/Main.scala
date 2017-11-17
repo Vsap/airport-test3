@@ -21,7 +21,7 @@ object Main {
     init()
     databaseFill(path)
   }
-
+  //val task63 = db.run(PassengerTable.table.filter(_.id === ().id ))
   def init(): Unit = {
     Await.result(db.run(PassengerTable.table.schema.create), Duration.Inf)
     Await.result(db.run(CompanyTable.table.schema.create), Duration.Inf)
