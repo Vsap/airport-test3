@@ -20,7 +20,7 @@ class PassInTripTable(tag: Tag) extends Table[PassInTrip](tag, "in_trip"){
   val passengerId = column[Long]("passengerId")
   val place = column[String]("place")
 
-  val tripFk = foreignKey("trip_id_fk", tripId, TableQuery[TripTable])(_.tripNo)
+  val tripFk = foreignKey("trip_id_fk", tripId, TableQuery[TripTable])(_.id)
   val passengerFk = foreignKey("passenger_id_fk", passengerId, TableQuery[PassengerTable])(_.id)
 
   def * = (id.?,tripId, date, passengerId, place) <>

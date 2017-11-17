@@ -16,10 +16,10 @@ object Main {
   val companyRepository = new CompanyRepository(db)
   val tripRepository = new TripRepository(db)
   val passInTripRepository = new PassInTripRepository(db)
-
+  val path = "C:\\Users\\Vladik\\Desktop\\test3\\airport\\src\\main\\scala\\source.txt"
   def main(args: Array[String]): Unit = {
-    init()
-    databaseFill()
+    //init()
+    databaseFill(path)
   }
 
   def init(): Unit = {
@@ -29,8 +29,8 @@ object Main {
     Await.result(db.run(PassInTripTable.table.schema.create), Duration.Inf)
   }
 
- def databaseFill(): Unit = {
-   val dc = DataConverter("source.txt")
+ def databaseFill(path: String): Unit = {
+   val dc = DataConverter(path)
     for (i <- dc.getCompany) {
       Await.result(companyRepository.create(i), Duration.Inf)
     }
