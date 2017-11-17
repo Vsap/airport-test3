@@ -7,7 +7,7 @@ import scala.concurrent.Future
 case class Passenger(id:Option[Long], name: String)
 
 class PassengerTable(tag: Tag) extends Table[Passenger](tag, "passengers"){
-  val id = column[Long]("id", O.PrimaryKey, O.AutoInc)
+  val id = column[Long]("id", O.PrimaryKey)
   val name = column[String]("name")
 
   def * = (id.?, name) <> (Passenger.apply _ tupled, Passenger.unapply)

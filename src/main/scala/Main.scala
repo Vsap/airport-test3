@@ -18,7 +18,7 @@ object Main {
   val passInTripRepository = new PassInTripRepository(db)
   val path = "C:\\Users\\Vladik\\Desktop\\test3\\airport\\src\\main\\scala\\source.txt"
   def main(args: Array[String]): Unit = {
-    //init()
+    init()
     databaseFill(path)
   }
 

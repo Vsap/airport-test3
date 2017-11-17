@@ -8,7 +8,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import java.time.LocalDateTime
 
 case class Trip(
-                tripNo: Long,
+                tripNo: Option[Long],
                 companyId: Long,
                 plane: String,
                 townFrom: String,
@@ -17,8 +17,7 @@ case class Trip(
                 timeIn: String)
 
 class TripTable(tag: Tag) extends Table[Trip](tag, "trip"){
-
-  val tripNo = column[Long]("trip_no")
+  val tripNo = column[Long]("trip_no", O.PrimaryKey)
   val companyId = column[Long]("company_id")
   val plane = column[String]("plane")
   val townFrom = column[String]("from")
@@ -29,7 +28,7 @@ class TripTable(tag: Tag) extends Table[Trip](tag, "trip"){
 
   val companyFk = foreignKey("company_id_fk", companyId, TableQuery[CompanyTable])(_.id)
 
-  def * = (tripNo, companyId, plane, townFrom, townTo, timeOut, timeIn) <>
+  def * = (tripNo.?, companyId, plane, townFrom, townTo, timeOut, timeIn) <>
     (Trip.apply _ tupled, Trip.unapply)
 }
 
