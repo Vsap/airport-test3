@@ -29,7 +29,12 @@ object Main {
       map{ case (trip, passIT) => (trip.tripNo,passIT.date)}.groupBy(p => p._2).
         map{case (_,group) => group.length}.sortBy(_.desc)
 
-    def task
+    def task88 = PassengerTable.table.join(PassInTripTable.table).on(_.id === _.passengerId).
+      join(TripTable.table).on{ case ((psg,psgT),trip) => psgT.tripId === trip.tripNo}.
+      join(CompanyTable.table).on{ case (((_,_),trip),cmp) => trip.companyId === cmp.id}.
+      groupBy{case (((psg,psgInTrip),trip),cmp) => (psg.name,cmp.name)}.map{case ((name,cmp),trips) =>
+      (name,cmp,trips.length)}.sortBy(_._3.desc)
+
   }
   //val task63 = db.run(PassengerTable.table.filter(_.id === ().id ))
   def init(): Unit = {
