@@ -33,7 +33,11 @@ object Main {
       join(TripTable.table).on{ case ((psg,psgT),trip) => psgT.tripId === trip.tripNo}.
       join(CompanyTable.table).on{ case (((_,_),trip),cmp) => trip.companyId === cmp.id}.
       groupBy{case (((psg,psgInTrip),trip),cmp) => (psg.name,cmp.name)}.map{case ((name,cmp),trips) =>
-      (name,cmp,trips.length)}.sortBy(_._3.desc)
+      (name,cmp,trips.length)}.sortBy(_._3.desc).result
+
+    def task103 = (TripTable.table.sortBy(_.tripNo.desc).take(3).map(_.tripNo) ++
+      TripTable.table.sortBy(_.tripNo.asc).take(3).map(_.tripNo)).sortBy(_.asc).result
+
 
   }
   //val task63 = db.run(PassengerTable.table.filter(_.id === ().id ))
