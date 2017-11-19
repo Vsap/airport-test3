@@ -17,15 +17,19 @@ object Main {
   val path = "C:\\Users\\Vladik\\Desktop\\test3\\airport\\src\\main\\scala\\source.txt"
   def main(args: Array[String]): Unit = {
 
-    val task63 = for { ((pp1, tId1),(pp2, tId2)) <- PassInTripTable.table.groupBy(p => (p.passengerId, p.place)).map{case (psgId, group) =>
+    def task63 = for { ((pp1, tId1),(pp2, tId2)) <- PassInTripTable.table.groupBy(p => (p.passengerId, p.place)).map{case (psgId, group) =>
       (psgId, group.map(p => p.tripId))}.map{ case (pp1,tId1) => ((pp1,tId1),PassInTripTable.table.groupBy(p =>
       (p.passengerId, p.place)).map{case (pp2,group) => (pp2,group.map(p => p.tripId))})} if(pp1 === pp2 && tId1 =!= tId2)}{yield pp1}
 
     def task67 = {
       val temp = TripTable.table.groupBy(p => (p.townFrom, p.townTo)).map{case (_,group) => (group.length)}.sortBy(_.desc).take(1)
-      TripTable.table.groupBy(p => (p.townFrom, p.townTo)).map{case (_,group) => (group.length)}.sortBy(_.desc).filterNot(_ === temp).length
+      TripTable.table.groupBy(p => (p.townFrom, p.townTo)).map{case (_,group) => (group.length)}.sortBy(_.desc).filter(_ === temp).length
     }
-    val task68 = Trip
+    def task77 = TripTable.table.filter(_.townFrom === "Rostov").join(PassInTripTable.table).on(_.tripNo === _.tripId).
+      map{ case (trip, passIT) => (trip.tripNo,passIT.date)}.groupBy(p => p._2).
+        map{case (_,group) => group.length}.sortBy(_.desc)
+
+    def task
   }
   //val task63 = db.run(PassengerTable.table.filter(_.id === ().id ))
   def init(): Unit = {
