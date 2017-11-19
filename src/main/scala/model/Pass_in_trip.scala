@@ -15,13 +15,13 @@ case class PassInTrip(
 
 class PassInTripTable(tag: Tag) extends Table[PassInTrip](tag, "in_trip"){
 
-  val tripId = column[Long]("trip_id")
-  val date = column[String]("date")
-  val passengerId = column[Long]("passengerId")
-  val place = column[String]("place")
+  def tripId = column[Long]("trip_id")
+  def date = column[String]("date")
+  def passengerId = column[Long]("passengerId")
+  def place = column[String]("place")
 
-  val tripFk = foreignKey("trip_id_fk", tripId, TableQuery[TripTable])(_.tripNo)
-  val passengerFk = foreignKey("passenger_id_fk", passengerId, TableQuery[PassengerTable])(_.id)
+  def tripFk = foreignKey("trip_id_fk", tripId, TableQuery[TripTable])(_.tripNo)
+  def passengerFk = foreignKey("passenger_id_fk", passengerId, TableQuery[PassengerTable])(_.id)
 
   def * = (tripId, date, passengerId, place) <>
     (PassInTrip.apply _ tupled, PassInTrip.unapply)

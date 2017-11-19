@@ -1,9 +1,7 @@
 import model._
 import source._
 import slick.jdbc.PostgresProfile.api._
-import java.time.{LocalDateTime, ZoneOffset}
-import java.sql.Time
-
+import java.sql._
 import scala.concurrent.Await
 import scala.concurrent.duration._
 
@@ -18,8 +16,16 @@ object Main {
   val passInTripRepository = new PassInTripRepository(db)
   val path = "C:\\Users\\Vladik\\Desktop\\test3\\airport\\src\\main\\scala\\source.txt"
   def main(args: Array[String]): Unit = {
-    init()
-    databaseFill(path)
+
+    val task63 = for { ((pp1, tId1),(pp2, tId2)) <- PassInTripTable.table.groupBy(p => (p.passengerId, p.place)).map{case (psgId, group) =>
+      (psgId, group.map(p => p.tripId))}.map{ case (pp1,tId1) => ((pp1,tId1),PassInTripTable.table.groupBy(p =>
+      (p.passengerId, p.place)).map{case (pp2,group) => (pp2,group.map(p => p.tripId))})} if(pp1 === pp2 && tId1 =!= tId2)}{yield pp1}
+
+    def task67 = {
+      val temp = TripTable.table.groupBy(p => (p.townFrom, p.townTo)).map{case (_,group) => (group.length)}.sortBy(_.desc).take(1)
+      TripTable.table.groupBy(p => (p.townFrom, p.townTo)).map{case (_,group) => (group.length)}.sortBy(_.desc).filterNot(_ === temp).length
+    }
+    val task68 = Trip
   }
   //val task63 = db.run(PassengerTable.table.filter(_.id === ().id ))
   def init(): Unit = {
