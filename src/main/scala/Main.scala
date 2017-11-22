@@ -6,7 +6,7 @@ import scala.concurrent.duration._
 
 object Main {
   val db = Database.forURL(
-    "jdbc:postgresql://127.0.0.1/airport?user=postgres&password=root"
+    "jdbc:postgresql://127.0.0.1/postgres?user=postgres&password=sworfish"
   )
   val passengerRepository = new PassengerRepository(db)
   val companyRepository = new CompanyRepository(db)
@@ -15,17 +15,14 @@ object Main {
   val path = "source.txt"
   def main(args: Array[String]): Unit = {
 
-    init()
-    databaseFill(path)
-    /*def task63 = for { ((pp1, tId1),(pp2, tId2)) <- PassInTripTable.table.groupBy(p => (p.passengerId, p.place)).map{case (psgId, group) =>
-      (psgId, group.map(p => p.tripId))}.map{ case (pp1,tId1) => ((pp1,tId1),PassInTripTable.table.groupBy(p =>
-      (p.passengerId, p.place)).map{case (pp2,group) => (pp2,group.map(p => p.tripId))})} if(pp1 === pp2 && tId1 =!= tId2)}{yield pp1}
-*/
-   /* def task63 = PassInTripTable.table.join(PassengerTable.table).on(_.passengerId === _.id).
-      map{ case (inTrip, passenger) => (passenger.id, passenger.name, inTrip.place)}.
-      groupBy{case (id,name,place) => (id,name,place)}.filter{case (id,name,place) => place}*/
+    def task63 = PassInTripTable.table.join(PassengerTable.table).on(_.passengerId === _.id)
+      .groupBy{case (psgT,psg) => (psgT.place, psg.name)}
+      .map{ case ((place, name), group) => (name, group.length)}
+      .filter{ case (name, count) => count > 1 }
+      .map{case (name, _ ) => name}.result
 
-    def task67 = TripTable.table.groupBy(p => (p.townFrom, p.townTo)).map{case (_,group) => (group.length)}.sortBy(_.desc).take(1).result
+    def task67 = TripTable.table.groupBy(p =>
+      (p.townFrom, p.townTo)).map{case (_,group) => group.length}.sortBy(_.desc).take(1).result
 
     def task77 = TripTable.table.filter(_.townFrom === "Rostov").join(PassInTripTable.table).on(_.tripNo === _.tripId).
       map{ case (trip, passIT) => (trip.tripNo,passIT.date)}.groupBy(p => p._2).
@@ -39,6 +36,15 @@ object Main {
 
     def task103 = (TripTable.table.sortBy(_.tripNo.desc).take(3).map(_.tripNo) ++
       TripTable.table.sortBy(_.tripNo.asc).take(3).map(_.tripNo)).sortBy(_.asc).result
+
+    def task95 = PassInTripTable.table.join(TripTable.table).on(_.tripId == _.tripNo)
+      .join(CompanyTable.table).on{case ((pit,trip), comp) =>  trip.companyId === comp.id}
+
+    def task72 = PassengerTable.table.join(PassInTripTable.table).on(_.id === _.passengerId).
+      join(TripTable.table).on{ case ((psg,psgT),trip) => psgT.tripId === trip.tripNo}.
+      groupBy{case (((psg,psgInTrip),trip)) => psg.name}.map{case (name,trips) =>
+      (name,trips.length)}.sortBy(_._2.desc).groupBy(_._2).take(1).result
+
 
   }
   def init(): Unit = {

@@ -4,7 +4,7 @@
 		module="slick_workshop$sources"
 		revision="0.1"
 		status="integration"
-		publication="20171113171052"
+		publication="20171122200614"
 	/>
 	<configurations>
 		<conf name="compile" visibility="public" description=""/>
