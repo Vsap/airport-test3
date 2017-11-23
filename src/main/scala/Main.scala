@@ -37,14 +37,23 @@ object Main {
     def task103 = (TripTable.table.sortBy(_.tripNo.desc).take(3).map(_.tripNo) ++
       TripTable.table.sortBy(_.tripNo.asc).take(3).map(_.tripNo)).sortBy(_.asc).result
 
-    def task95 = PassInTripTable.table.join(TripTable.table).on(_.tripId == _.tripNo)
-      .join(CompanyTable.table).on{case ((pit,trip), comp) =>  trip.companyId === comp.id}
+    def task95 = {
+      val completeTable = PassInTripTable.table.join(TripTable.table).on(_.tripId === _.tripNo)
+        .join(CompanyTable.table).on{case ((pit,trip), comp) =>  trip.companyId === comp.id}
+        .map{case ((pit,trip),cmp) => (cmp,trip,pit)}
+      for{
+        company <- CompanyTable.table
+        flightsAndPassengers <- completeTable.groupBy{case (cmp,trip,pit) => (cmp.name, pit.date)}
+        planes <- CompanyTable.table.join(TripTable.table).on(_.id === _.companyId).groupBy{case (cmp,trips) =>
+          (cmp.id,trips.plane)}
+        //passengers <- completeTable.groupBy{case (cmp,trip,pit) => (cmp.name, pit.date)}
+      }yield (company.name,flightsAndPassengers._1._2.length,planes._2.length,flightsAndPassengers._2.distinct.length,flightsAndPassengers._2.length)
+    }
 
     def task72 = PassengerTable.table.join(PassInTripTable.table).on(_.id === _.passengerId).
       join(TripTable.table).on{ case ((psg,psgT),trip) => psgT.tripId === trip.tripNo}.
       groupBy{case (((psg,psgInTrip),trip)) => psg.name}.map{case (name,trips) =>
       (name,trips.length)}.sortBy(_._2.desc).groupBy(_._2).take(1).result
-
 
   }
   def init(): Unit = {
