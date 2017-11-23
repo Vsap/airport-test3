@@ -2,10 +2,7 @@ package source
 
 import java.time._
 import java.time.format.DateTimeFormatter
-import javafx.util.converter.LocalDateTimeStringConverter
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.RegularExpression
 import model._
-
 import scala.io.Source
 
 case class DataConverter(path: String) {

@@ -3,6 +3,8 @@ import source._
 import slick.jdbc.PostgresProfile.api._
 import scala.concurrent.Await
 import scala.concurrent.duration._
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 object Main {
   val db = Database.forURL(
@@ -15,7 +17,6 @@ object Main {
   val path = "source.txt"
   def main(args: Array[String]): Unit = {
     init()
-    //databaseClear(path)
     databaseFill(path)
     task63
     task67
@@ -26,14 +27,6 @@ object Main {
     task102
     task103
     task114
-//    println(task63.toString)
-//    println(task67.toString)
-//    println(task72.toString)
-//    println(task77.toString)
-//    println(task88.toString)
-//    println(task95.toString)
-//    println(task102.toString)
-//    println(task103.toString)
   }
 
   def task63 = PassInTripTable.table.join(PassengerTable.table).on(_.passengerId === _.id)
@@ -41,6 +34,11 @@ object Main {
     .map{ case ((place, name), group) => (name, group.length)}
     .filter{ case (name, count) => count > 1 }
     .map{case (name, _ ) => name}.result
+
+  def task66 =  PassInTripTable.table.join(TripTable.table).on(_.tripId === _.tripNo)
+    .groupBy{case (psgT, trips) => (trips.townFrom,psgT.date)}.filter{case ((from,date),_) =>
+    date >= LocalDateTime.parse("2003-04-01", DateTimeFormatter.ofPattern("uuuu-MM-dd")) &&
+      date <= LocalDateTime.parse("2003-04-07", DateTimeFormatter.ofPattern("uuuu-MM-dd"))}.length.result
 
   def task67 = TripTable.table.groupBy(p =>
     (p.townFrom, p.townTo)).map{case (_,group) => group.length}.sortBy(_.desc).take(1).result
