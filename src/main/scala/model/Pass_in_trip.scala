@@ -9,14 +9,14 @@ import scala.concurrent.Future
 
 case class PassInTrip(
                       tripId: Long,
-                      date: String,
+                      date: LocalDateTime,
                       passengerId: Long,
                       place:String)
 
 class PassInTripTable(tag: Tag) extends Table[PassInTrip](tag, "in_trip"){
 
   def tripId = column[Long]("trip_id")
-  def date = column[String]("date")
+  def date = column[LocalDateTime]("date")
   def passengerId = column[Long]("passengerId")
   def place = column[String]("place")
 

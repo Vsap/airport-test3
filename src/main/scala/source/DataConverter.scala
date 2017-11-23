@@ -14,6 +14,7 @@ case class DataConverter(path: String) {
   val passengerPattern = """\((.*),"(.*)"\)""".r
   val tripPattern = """\(([0-9]{4}),([0-9]*?),"(.*?)","(.*?)","(.*?)","(.*?)","(.*?)"\)""".r
   val passInTripPattern = """\(([0-9]*?),"(.*?)",(.*?),"(.*?)"\)""".r
+  var formatter = DateTimeFormatter.ofPattern("uuuuMMdd HH:mm:ss.SSS")
   def getCompany():List[Company] = for{
       line <- file.dropWhile("""-*Company-*""".r.unapplySeq(_).isDefined == false).tail.takeWhile(companyPattern.unapplySeq(_).isDefined)
       companyPattern(id,name) <- companyPattern.findAllIn(line)
@@ -29,12 +30,12 @@ case class DataConverter(path: String) {
     for{
       line <- file.dropWhile("""-*Trip-*""".r.unapplySeq(_).isDefined == false).tail.takeWhile(tripPattern.unapplySeq(_).isDefined)
       tripPattern(tripNo, companyId, plane, townFrom, townTo, timeOut, timeIn) <- tripPattern.findAllIn(line)
-    } yield Trip(Option(tripNo.toLong), companyId.toLong, plane, townFrom, townTo, timeOut, timeIn)
+    } yield Trip(Option(tripNo.toLong), companyId.toLong, plane, townFrom.toString, townTo.toString, LocalDateTime.parse(timeOut.toString, formatter), LocalDateTime.parse(timeIn.toString, formatter))
 
   def getPassInTrip():List[PassInTrip] = for{
       line <- file.dropWhile("""-*Pass_in_trip-*""".r.unapplySeq(_).isDefined == false).tail.takeWhile(passInTripPattern.unapplySeq(_).isDefined)
-      passInTripPattern(tripId, dateTo, passengerId, place) <- passInTripPattern.findAllIn(line)
-    } yield PassInTrip(tripId.toLong, dateTo, passengerId.toLong, place)
+      passInTripPattern(tripId, date, passengerId, place) <- passInTripPattern.findAllIn(line)
+    } yield PassInTrip(tripId.toLong, LocalDateTime.parse(date.toString, formatter), passengerId.toLong, place)
   //file.dropWhile("""-*Pass_in_trip-*""".r.unapplySeq(_).isDefined == false).tail.takeWhile(passInTripPattern.unapplySeq(_).isDefined).map{ case passInTripPattern(tripId, dateTo, passengerId, place) => PassInTrip(Option(tripId.toLong), tripId.toLong, dateTo, passengerId.toLong, place)}.toSeq
 
 }
