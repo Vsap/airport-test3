@@ -5,11 +5,10 @@ import java.time.temporal.ChronoUnit
 import scala.concurrent.Await
 import scala.concurrent.duration._
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 object Main {
   val db = Database.forURL(
-    "jdbc:postgresql://127.0.0.1/postgres?user=postgres&password=swordfish"
+    "jdbc:postgresql://127.0.0.1/airport?user=postgres&password=root"
   )
   val passengerRepository = new PassengerRepository(db)
   val companyRepository = new CompanyRepository(db)
@@ -17,17 +16,8 @@ object Main {
   val passInTripRepository = new PassInTripRepository(db)
   val path = "source.txt"
   def main(args: Array[String]): Unit = {
-    init()
+    //init()
     databaseFill(path)
-    task63
-    task67
-    task72
-    task77
-    task88
-    //task95
-    task102
-    task103
-    task114
   }
 
   def task63 = PassInTripTable.table.join(PassengerTable.table).on(_.passengerId === _.id)
