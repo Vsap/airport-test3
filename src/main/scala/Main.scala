@@ -36,9 +36,10 @@ object Main {
     .map{case (name, _ ) => name}.result
 
   def task66 =  PassInTripTable.table.join(TripTable.table).on(_.tripId === _.tripNo)
-    .groupBy{case (psgT, trips) => (trips.townFrom,psgT.date)}.filter{case ((from,date),_) =>
-    date >= LocalDateTime.parse("2003-04-01", DateTimeFormatter.ofPattern("uuuu-MM-dd")) &&
-      date <= LocalDateTime.parse("2003-04-07", DateTimeFormatter.ofPattern("uuuu-MM-dd"))}.length.result
+    .filter{case (psgT, trips) => trips.townFrom === "Rostov"}
+    .filter{case (psgT, trips) => psgT.date < LocalDateTime.parse("2003-04-07T00:00")}
+    .filter{case (psgT, trips) => psgT.date > LocalDateTime.parse("2003-04-01T00:00")}
+    .groupBy(p => (p._1.date,p._2.townFrom)).map(_._1).result
 
   def task67 = TripTable.table.groupBy(p =>
     (p.townFrom, p.townTo)).map{case (_,group) => group.length}.sortBy(_.desc).take(1).result

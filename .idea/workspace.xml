@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a85c3ca1-3a9a-4068-83c0-c03c0acea4c2" name="Default" comment="">
+    <list default="true" id="a85c3ca1-3a9a-4068-83c0-c03c0acea4c2" name="Default" comment="DateTime fixed. 9.5 of 10 done">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/Main.scala" afterPath="$PROJECT_DIR$/src/main/scala/Main.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/source/DataConverter.scala" afterPath="$PROJECT_DIR$/src/main/scala/source/DataConverter.scala" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/project/project/target/" />
@@ -26,12 +25,11 @@
       <file leaf-file-name="Main.scala" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/scala/Main.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="39" column="91" lean-forward="true" selection-start-line="39" selection-start-column="91" selection-end-line="39" selection-end-column="91" />
+            <state relative-caret-position="112">
+              <caret line="41" column="53" lean-forward="true" selection-start-line="41" selection-start-column="53" selection-end-line="41" selection-end-column="53" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
-                <element signature="e#2420#2438#0" expanded="false" />
-                <marker date="1511455299735" expanded="true" signature="1070:1417" ph="..." />
+                <element signature="e#2427#2445#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -335,7 +333,14 @@
       <option name="project" value="LOCAL" />
       <updated>1511441776837</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="DateTime fixed. 9.5 of 10 done">
+      <created>1511455393473</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1511455393473</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -344,6 +349,7 @@
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.07024793" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="SBT" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -367,7 +373,6 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6095041" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -411,7 +416,8 @@
     <MESSAGE value="6/10" />
     <MESSAGE value="63,67,72,77,88,95,103/10" />
     <MESSAGE value="DateTime fixed. 8.5 of 10 done" />
-    <option name="LAST_COMMIT_MESSAGE" value="DateTime fixed. 8.5 of 10 done" />
+    <MESSAGE value="DateTime fixed. 9.5 of 10 done" />
+    <option name="LAST_COMMIT_MESSAGE" value="DateTime fixed. 9.5 of 10 done" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -424,8 +430,7 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <element signature="e#2420#2438#0" expanded="false" />
-            <marker date="1511455299735" expanded="true" signature="1070:1417" ph="..." />
+            <element signature="e#2427#2445#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -468,8 +473,7 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <element signature="e#2420#2438#0" expanded="false" />
-            <marker date="1511455299735" expanded="true" signature="1070:1417" ph="..." />
+            <element signature="e#2427#2445#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -508,12 +512,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/Main.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="39" column="91" lean-forward="true" selection-start-line="39" selection-start-column="91" selection-end-line="39" selection-end-column="91" />
+        <state relative-caret-position="112">
+          <caret line="41" column="53" lean-forward="true" selection-start-line="41" selection-start-column="53" selection-end-line="41" selection-end-column="53" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <element signature="e#2420#2438#0" expanded="false" />
-            <marker date="1511455299735" expanded="true" signature="1070:1417" ph="..." />
+            <element signature="e#2427#2445#0" expanded="false" />
           </folding>
         </state>
       </provider>
